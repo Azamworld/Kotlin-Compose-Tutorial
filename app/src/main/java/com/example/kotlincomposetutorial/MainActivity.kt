@@ -1,5 +1,6 @@
 package com.example.kotlincomposetutorial
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -58,6 +59,16 @@ fun ComposeComponents(components: List<String>, modifier: Modifier = Modifier) {
     ) {
        items(components){
            ComponentsRow(component = it, onClick = {
+               when (it) {
+                   "Text" -> {
+                       context.startActivity(Intent(context, TextActivity::class.java))
+                   }
+               "Image" -> {
+
+               }
+               "Button" -> {
+               }
+               }
                Toast.makeText(context, "Clicked: ${it}", Toast.LENGTH_SHORT).show()
            } )
            Divider(color = Color.Gray,
