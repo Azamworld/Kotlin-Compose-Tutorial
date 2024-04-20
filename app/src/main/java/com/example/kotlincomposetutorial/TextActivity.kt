@@ -3,10 +3,13 @@ package com.example.kotlincomposetutorial
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.basicMarquee
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,6 +28,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,6 +60,12 @@ class TextActivity : ComponentActivity() {
                         TextStyleBrush()
                         TextStyleBrushOnSpan()
                         TextStyleSpanWithOpacity()
+                        TextMarquee()
+
+                        //Style paragraph
+                        CenterText()
+                        ParagraphStyle()
+
                       //  Greeting("Android")
                     }
 
@@ -184,6 +194,7 @@ private fun TextStyleBrushOnSpan() {
 val LightBlue = Color(0xFF0066FF)
 val Purple = Color(0xFF800080)
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TextStyleSpanWithOpacity() {
     val gradientColors = listOf(Cyan, LightBlue, Purple /*...*/)
@@ -204,6 +215,47 @@ private fun TextStyleSpanWithOpacity() {
                 )
             ) {
                 append("Compose ❤️")
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+fun TextMarquee() {
+    // Marquee only animates when the content doesn't fit in the max width.
+    Column(Modifier.width(400.dp)) {
+        Text(
+            "Learn about why it's great to use Jetpack Compose",
+            modifier = Modifier.basicMarquee(),
+            fontSize = 50.sp
+        )
+    }
+}
+
+@Composable
+fun CenterText() {
+    Text(
+        "Hello World", textAlign = TextAlign.Center, modifier = Modifier.width(150.dp)
+    )
+}
+
+@Composable
+fun ParagraphStyle() {
+    Text(
+        buildAnnotatedString {
+            withStyle(style = androidx.compose.ui.text.ParagraphStyle(lineHeight = 30.sp)) {
+                withStyle(style = SpanStyle(color = Color.Blue)) {
+                    append("Hello\n")
+                }
+                withStyle(
+                    style = SpanStyle(
+                        fontWeight = FontWeight.Bold, color = Color.Red
+                    )
+                ) {
+                    append("World\n")
+                }
+                append("Compose")
             }
         }
     )
